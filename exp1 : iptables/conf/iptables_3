@@ -1,0 +1,35 @@
+##Local Network 1and 2 Configuration
+
+#Filter Table OUTPUT Chain
+iptables -F OUTPUT
+iptables -A OUTPUT -s 192.168.14.0/24, 192.168.6.0/24 -d 173.194.39.210 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+service iptables save
+
+#Filter Table INPUT Chain
+iptables -F INPUT
+iptables -A INPUT -s 173.194.39.210 -d 192.168.14.0/24, 192.168.6.0/24 -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+service iptables save
+
+
+
+##Firewall Configuration
+
+#Filter Table FORWARD Chain
+iptables -F FORWARD
+iptables -A FORWARD -p tcp --dport 80 -i eth2, eth3 -o eth1 -d 173.194.39.210 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -p tcp --sport 80 -i eth1 -o eth2,eth3 -s 173.194.39.210 -m state --state ESTABLISHED -j ACCEPT
+service iptables save
+
+
+
+##Google Configuration
+
+#Filter Table INPUT Table
+iptables -F INPUT
+iptables -A INPUT -s 192.168.14.0/24, 192.168.6.0/24 -d 173.194.39.210 -p tcp --dport 80 -m state --state NEW, ESTABLISHED -j ACCEPT
+service iptables save
+
+#Filter Table OUTPUT Table
+iptables -F OUTPUT 
+iptables -A OUTPUT -s  173.194.39.210 -d 192.168.14.0/24, 192.168.6.0/24  -p tcp –sport 80 -m state –state ESTABLISHED -j ACCEPT
+service iptables save

@@ -1,0 +1,42 @@
+#Creating ipset
+
+ipset create localNetwork2 hash:ip
+ipset add localNetwork2 192.168.6.0/24
+
+
+
+##External Computer Configuration
+
+#Filter Table OUTPUT Chain
+iptables –F OUTPUT
+iptables -A OUTPUT -m set --match-set localNetwork2 dst -p icmp --icmp-type 8 -j ACCEPT
+service iptables save
+
+#Filter Table INPUT Chain
+iptables -F INPUT
+iptables -A INPUT -m set --match-set localNetwork2 src -p icmp --icmp-type 0 -j ACCEPT
+service iptables save
+
+
+
+##Firewall Configuration
+
+#Filter Table FORWARD Chain
+iptables -F FORWARD
+iptables -A FORWARD -p icmp --icmp-type 8 -i eth1 -o eth2  -j ACCEPT
+iptables -A FORWARD -p icmp --icmp-type 0 -i eth2 -o eth1 -d 93.101.30.55 -j ACCEPT
+service iptables save
+
+
+
+##Local Network 2 Configuration
+
+#Filter Table INPUT Chain
+iptables -F INPUT
+iptables -A INPUT -p icmp --icmp-type 8 -s 93.101.30.55  -j ACCEPT
+service iptables save
+
+#Filter Table OUTPUT Chain
+iptables -F OUTPUT
+iptables -F OUTPUT -p icmp --icmp-type 0 -d  93.101.30.55 -j ACCEPT
+service iptables save

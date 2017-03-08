@@ -1,0 +1,11 @@
+##Web Server Configuration
+
+#Filter Table OUTPUT Chain
+iptables -F OUTPUT
+iptables -A OUTPUT -d 192.168.14.2 -p tcp --dport 8080,8007,8009,8085,8443,80 -m state --state ESTABLISHED  -j ACCEPT
+service iptables save
+
+#Filter Table INPUT Chain
+iptables -F INPUT
+iptables -A INPUT -s 192 .168.14.2 -p tcp --sport 8080,8007,8009,8085,8443,80 -m state --state NEW,ESTABLISHED  -j ACCEPT
+service iptables save

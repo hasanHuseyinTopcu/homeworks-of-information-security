@@ -1,0 +1,35 @@
+##PC-1 Configuration
+
+#Filter Table OUTPUT chain
+iptables –F OUTPUT
+iptables -A OUTPUT -p icmp --icmp-type 8 -s 192.168.6.2 -d 192.168.14.2 -j ACCEPT
+service iptables save
+
+#Filter Table INPUT chain
+iptables -F INPUT
+iptables -A INPUT -p icmp --icmp-type 0 -s 192.68.14.2 -d 192.168.6.2  -j ACCEPT
+service iptables save
+
+
+
+##Firewall Configuration
+
+#Filter Table FORWARD Chain
+iptables -F FORWARD
+iptables -A FORWARD -p icmp --icmp-type 8 -i eth2 -o eth3 -j ACCEPT
+iptables -A FORWARD -p icmp --icmp-type 0 -i eth3 -o eth2 -j ACCEPT
+service iptables save
+
+
+
+##PC-3 Configuration
+
+#Filter Table INPUT Chain
+iptables -F INPUT
+iptables -A INPUT -p icmp –icmp-type 8 -s  0/0 -d 192.168.14.2 -j ACCEPT
+service iptables save
+
+#Filter Table OUTPUT Chain
+iptables -F OUTPUT
+iptables -F OUTPUT -p icmp –icmp-type 0 -s 192.168.14.2 -d  0/0 -j ACCEPT
+service iptables save

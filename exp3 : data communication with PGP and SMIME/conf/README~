@@ -1,0 +1,28 @@
+First of all, these operations are for Linux's Ubuntu operating system. More specifically, these operations were performed in ubuntu 15.10 operating system. PGP and SMIME's commands are universal for OS but folder structure may be diffrent. Therefore, if you use another operating system, then you must set the appropriate directory for the folders to the operating system you are using. Compatibility with other versions and operating system can not be guaranteed.
+
+PGP
+
+	Sender
+ 	  - Copy pubring.gpg and secring.gpg file in "pgp/sender/" folder into  "/home/.gnupg/" folder.
+	  - Now you have sender's public and private key.
+	  - If you want to encrypt or sign any file then you must use commands in the report about pgp section.
+	
+	Receiver
+	  - copy pubring.gpg and secring.gpg file in "pgp/receiver/" folder into  "/home/.gnupg/" folder.
+	  - Now you have receiver's public and private key.
+	  - If you want to decrypt or verify any file then you must use commands in the report about pgp section.
+
+SMIME
+
+	Sender
+	  - Copy CA file in "smime/sender/" folder into "/root/" folder.
+	  - You must change $dir line in the "/etc/ssl/openssl.cnf" file. You must write "$dir = /root/CA".
+	  - Now you have Certificate Authority and sender's certificate and key.
+	  - If you want to encrypt or sign any file then you must use command in the report about smime section.
+	
+	Receiver
+	  - Copy CA file in "smime/receiver/" folder into "/root/" folder.
+	  - You must change $dir line in the "/etc/ssl/openssl.cnf" file. You must write "$dir = /root/CA".
+	  - Now you have Certificate Authority and receiver's certificate and key.
+	  - If you want to decrypt or verify any file then you must use command in the report about smime section.
+

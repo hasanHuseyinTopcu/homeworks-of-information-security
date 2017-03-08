@@ -1,0 +1,16 @@
+First of all, these processes are for Linux's Ubuntu operating system. More specifically, these operations were performed in ubuntu 15.10 operating system. Compatibility with other versions and operating system can not be guaranteed. Finally, the server must have apache2 on the computer or it must be loaded first
+
+##Server Side Operations
+
+1-) openssl.cnf file must be placed under "/etc/ssl/" folder.
+2-) hosts file must be placed under "/etc/" folder.
+3-) site1.conf and site2.conf files in sites-available folder must be placed under "/etc/apache2/sites-available/" folder.
+4-) site1.conf and site2.conf files in sites-enabled folder must be placed under "/etc/apache2/sites-enabled/" folder.
+5-) websites folder in httpd folder must be placed under "/var/www/" folder.
+6-) CA folder in certs folder must be placed under "/root/" folder.
+
+
+##Client Side Operations
+
+1-) hosts file must be placed under "/etc/" folder.
+2-) cacert.pem file in "certs/CA/" folder must import into browser.

@@ -1,0 +1,40 @@
+﻿##Firewall Configuration
+
+
+#Filter Table FORWARD Chain
+
+iptables -F FORWARD
+
+iptables -A FORWARD -o eth0 -p tcp --dport 443  --syn -d 192.168.1.2 -m connlimit --connlimit-above 12 –connlimit-mask 0 -j DROP
+
+iptables -A FORWARD -o eth0 -d 192.168.1.2 -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+iptables -A FORWARD -i eth0 -s 192.168.1.2 -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+
+service iptables save
+
+
+
+
+
+##Web Server Configuration
+
+
+#Filter Table INPUT Chain
+
+iptables -F INPUT
+
+iptables -A INPUT -s 0/0 -d 192.168.1.2 -p tcp --dport 443 -m state --state NEW, ESTABLISHED -j ACCEPT
+
+service iptables save
+
+
+
+#Filter Table OUTPUT Chain
+
+iptables -F OUTPUT 
+
+iptables -A OUTPUT -s 192.168.1.2 -d 0/0 -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
+
+service iptables save
+
